@@ -39,6 +39,80 @@ output/
 _archive/                    - Original scripts preserved for reference
 ```
 
+## Input File Formats
+
+The per-experiment raw data lives on the external SynMap drive (`synmap_data_dir` in `config/paths.json`) under each experiment's `data_subdir`. The sections below describe each input file's structure so it can be recreated.
+
+### Directory layout (per experiment, on the SynMap drive)
+
+```
+<data_subdir>/
+  Registered/                          - Ilastik HCR gene tables (one CSV per slice × gene)
+    s05_Penk001_..._table.csv
+    s05_Calb1001_..._table.csv
+    ...
+  <... Slice N>/                        - one folder per slice (matched by '*Slice*')
+    MAX_channel_3_*.tif                 - CheRiff channel max-projection image
+    *ilastik_masks_AllVoltronPos_consec*.tif  - Voltron soma mask (one label per cell)
+    TS files/
+      TS*.mat                          - voltage-imaging time series
+      Opto*.mat                        - optogenetic stimulus timing
+      ROI*.mat                         - ROI → cell-ID mapping
+      *CheRiff_composite_table*.csv    - direct-stimulation annotation
+```
+
+### HCR imaging data — `Registered/s##_<Gene>...table.csv`
+
+Ilastik object-classification exports, one CSV per (slice, gene), read by `R/hcr_data_loader.R`. Slice index comes from the `s##` filename prefix; gene name from the rest of the filename (per `gene_file_regex`). The relevant columns are mapped through the experiment config's `file_colnames` (defaults shown):
+
+| Config key | Default column | Meaning |
+|------------|----------------|---------|
+| `cell_id`  | `CellID` | Object/cell identifier (matches ROI `roiIndices`) |
+| `X`/`Y`/`Z`| `Center_X`/`Center_Y`/`Center_Z` | Object centroid coordinates (pixels) |
+| `Roi_mean` | `MeanROIIntensity` | Mean fluorescence intensity within the object |
+| `Neighbor_mean` | `MeanNeighborhoodIntensity` | Mean intensity in the surrounding neighborhood |
+| `Label` | `UserLabel` | Ilastik binary class (`Label 1` = positive for that gene, else negative) |
+
+To recreate: segment each registered slice in Ilastik, classify objects per gene, and export the object-feature table with the columns above (or set `file_colnames` to match your export).
+
+### Time series — `TS files/TS*.mat`
+
+One or more `.mat` files per slice (which to load is set by `ephys.slice_file_counts.ts_idx` / `ts_concat`). Each contains a single variable:
+
+- **`ts`** — the voltage-imaging traces as a numeric matrix of `timepoints × cells`, **or** a cell array of such matrices (the loader applies `cell2mat`). Column order corresponds to the ROI order in the matching `ROI*.mat` file.
+
+### Optogenetic stimulus — `TS files/Opto*.mat`
+
+Loaded per `ephys.slice_file_counts.opto_idx`. Each contains a single variable:
+
+- **`stim`** — a binary column vector, length = number of timepoints, with `1` at every frame where the optogenetic stimulus is ON (`0` otherwise). The loader takes `find(stim == 1)` as the stimulus onset indices, offsetting by prior-file length when time series are concatenated.
+
+### ROI map — `TS files/ROI*.mat`
+
+Loaded per `ephys.slice_file_counts.roi_idx`. Each contains a single variable:
+
+- **`roiIndices`** — a vector of cell IDs (one per imaged ROI), in the same order as the columns of `ts`. These IDs are matched against the HCR `cell_id`/`CellID` values to pair each trace with its cell-type classification.
+
+### Direct-stimulation annotation — `TS files/*CheRiff_composite_table*.csv`
+
+A table read with `readtable`; the only column used is:
+
+- **`UserLabel`** — per-cell flag marking cells that were directly stimulated by CheRiff (indexed by kept cell ID into `cheriff_pos`).
+
+### CheRiff laminar density — `output/<experiment_id>/s##_CheRiff_Input_to_All_Rois.csv`
+
+**Derived** (not raw): produced by `MATLAB/Extract_CheRiff_density.m` from the CheRiff channel TIF and Voltron mask, then read back by `load_slice_data.m`. One CSV per slice, one row per ROI:
+
+| Column | Meaning |
+|--------|---------|
+| `cellID` | ROI/cell label (matches the Voltron mask labels) |
+| `allLayers` | Mean CheRiff signal over the full cortical column for that soma's x-strip |
+| `normAllLayers` | `allLayers` normalized to the slice max (used as `cheriff_data`) |
+| `L1` / `normL1` | Mean (and slice-normalized) CheRiff signal in L1 (top 80 px below cortex top) |
+| `atSoma` / `normAtSoma` | Mean (and slice-normalized) CheRiff signal in a 101 px box around the soma |
+
+To recreate: run `Extract_CheRiff_density('config/experiments/<id>.json')`, which needs `MAX_channel_3_*.tif` and `*ilastik_masks_AllVoltronPos_consec*.tif` present in each slice folder.
+
 ## Quick Start
 
 ### Stream 2: Prepare reference data (run once)
