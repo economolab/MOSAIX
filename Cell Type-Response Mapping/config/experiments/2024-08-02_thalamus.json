@@ -1,0 +1,39 @@
+{
+  "experiment_id": "0802",
+  "experiment_label": "2024-08-02 MOSAIX Thalamus",
+  "data_subdir": "MThal_0802/Registered/",
+  "slice_enumeration": "folder",
+  "slice_offset": 1,
+  "n_slices": 5,
+  "gene_file_regex": ".*/(s\\d{2}_.*)\\d{3}_.*_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Rorb", "Ccdc80", "Pamr1", "Dkkl1", "Npnt", "Fam84b", "Slco2a1",
+                 "Myl4", "Syt6", "Ctgf", "Slc32a1", "Pvalb", "Sst", "Vip"],
+  "genes_combined": [["Ctgf", "Penk"]],
+  "img_lims": {
+    "ymax": [1860, 1770, 1600, 1800, 1800],
+    "ymin": [155, 208, 180, 440, 50],
+    "zmin": [0, 1, 1, 0, 1],
+    "zmax": [35, 40, 40, 40, 35],
+    "angle_deg": [9, 6, 10, 22, -7]
+  },
+  "file_colnames": {
+    "cell_id": "CellID",
+    "X": "Center_X",
+    "Y": "Center_Y",
+    "Z": "Center_Z",
+    "Roi_mean": "MeanROIIntensity",
+    "Neighbor_mean": "MeanNeighborhoodIntensity",
+    "Label": "UserLabel"
+  },
+  "ephys": {
+    "group": "thalamus",
+    "per_slice_file_counts": [
+      {"ts_idx": [1], "opto_idx": [1], "roi_idx": [1], "ts_concat": "single"},
+      {"ts_idx": [2], "opto_idx": [2], "roi_idx": [2], "ts_concat": "single"},
+      {"ts_idx": [1], "opto_idx": [1], "roi_idx": [1], "ts_concat": "single"},
+      {"ts_idx": [1], "opto_idx": [1], "roi_idx": [1], "ts_concat": "single"},
+      {"ts_idx": [1], "opto_idx": [1], "roi_idx": [1], "ts_concat": "single"}
+    ],
+    "disnip_trim": [99, 100]
+  }
+}

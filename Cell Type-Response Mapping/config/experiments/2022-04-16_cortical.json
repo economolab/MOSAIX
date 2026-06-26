@@ -1,0 +1,28 @@
+{
+  "experiment_id": "0416",
+  "experiment_label": "2022-04-16 Full Cortical Probe set",
+  "data_subdir": "Cortical_0416/",
+  "slice_enumeration": "flat",
+  "slice_offset": 0,
+  "n_slices": 1,
+  "gene_file_regex": ".*/(.*?)_.*_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Rorb", "Ccdc80", "Pamr1", "Dkkl1", "Slco2a1", "Fam84b", "Npnt",
+                 "Myl4", "Syt6", "Slc32a1", "Pvalb", "Sst", "Vip"],
+  "genes_combined": [["Dkkl1", "Slco2a1"]],
+  "img_lims": {
+    "ymax": [1900],
+    "ymin": [70],
+    "zmin": [0],
+    "zmax": [24],
+    "angle_deg": [25]
+  },
+  "file_colnames": {
+    "cell_id": "labelimage_oid",
+    "X": "Center.of.the.object_0",
+    "Y": "Center.of.the.object_1",
+    "Z": "Center.of.the.object_2",
+    "Roi_mean": "Mean.Intensity",
+    "Neighbor_mean": "Mean.Intensity.in.neighborhood",
+    "Label": "Predicted.Class"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "experiment_id": "0811",
+  "experiment_label": "2024-08-11 MOSAIX Contra MCtx",
+  "data_subdir": "Contra_0811/Registered/",
+  "slice_enumeration": "folder",
+  "slice_offset": 0,
+  "n_slices": 5,
+  "gene_file_regex": ".*/(s\\d{2}_.*)\\d{3}_.*_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Rorb", "Ccdc80", "Pamr1", "Dkkl1", "Npnt", "Fam84b", "Slco2a1",
+                 "Myl4", "Syt6", "Ctgf", "Slc32a1", "Pvalb", "Sst", "Vip"],
+  "genes_combined": [["Ctgf", "Penk"]],
+  "img_lims": {
+    "ymax": [1674, 1662, 1791, 1629, 1749],
+    "ymin": [258, 300, 192, 135, 228],
+    "zmin": [0, 0, 0, 0, 0],
+    "zmax": [35, 36, 40, 35, 35],
+    "angle_deg": [7, 17, 12, 9, 7]
+  },
+  "file_colnames": {
+    "cell_id": "CellID",
+    "X": "Center_X",
+    "Y": "Center_Y",
+    "Z": "Center_Z",
+    "Roi_mean": "MeanROIIntensity",
+    "Neighbor_mean": "MeanNeighborhoodIntensity",
+    "Label": "UserLabel"
+  },
+  "ephys": {
+    "group": "contra",
+    "slice_file_counts": [
+      {"ts_idx": [1, 2], "opto_idx": [1, 2], "roi_idx": [2], "ts_concat": "vertcat_then_cellmat"}
+    ],
+    "disnip_trim": [99, 100]
+  }
+}

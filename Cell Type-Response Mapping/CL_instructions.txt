@@ -1,0 +1,33 @@
+cd /path/to/MOSAIX   # cd into your local clone of the repo
+
+# ONE TIME: 
+
+# Pre-process ABC Atlas RNA-Seq and MERFISH data for subsequent use.
+# (Needs raw seq/merfish and metadata files to be in the "input/raw abc" folder)
+Rscript R/prepare_reference_data.R
+
+# Generate binarized RNA-Seq data for Bayesian classification of HCR data.
+# (Needs processed seq and merfish files to be in the "input/processed abc" folder)
+Rscript R/make_meta_seq_cells.R
+
+
+# PER EXPERIMENT:
+
+# Run HCR classification.
+# Specify config path. Config points to per-gene annotation files in input/<experiment>/
+Rscript R/run_classification.R config/experiments/2024-07-30_thalamus.json
+
+# Generate CheRiff quantifications for normalization.
+# Specify config path. Loads image files from input/<experiment>/.
+matlab -batch "addpath('MATLAB'); Extract_CheRiff_density('config/experiments/2024-07-30_thalamus.json');"
+
+# Aggregate all experiment data - HCR classification, voltage imaging, and cheRiff.
+matlab -batch "addpath('MATLAB'); Find_EPSPs('config/experiments/2024-07-30_thalamus.json');"
+
+# Analyze all responses together.
+matlab -batch "addpath('MATLAB'); Analyze_all_responses;"
+
+
+
+
+

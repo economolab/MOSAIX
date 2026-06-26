@@ -1,0 +1,28 @@
+{
+  "experiment_id": "1022",
+  "experiment_label": "2022-10-22 Puromycin test Ctrl03",
+  "data_subdir": "Voltron_1022/",
+  "slice_enumeration": "flat",
+  "slice_offset": 0,
+  "n_slices": 1,
+  "gene_file_regex": ".*/(.*?)_\\d{3}_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Rorb", "Ccdc80", "Pamr1", "Dkkl1", "Fam84b", "Npnt",
+                 "Myl4", "Syt6", "Ctgf", "Slc32a1", "Pvalb", "Sst", "Vip", "JF585"],
+  "genes_combined": [["Rorb", "Vip"]],
+  "img_lims": {
+    "ymax": [2007],
+    "ymin": [0],
+    "zmin": [7],
+    "zmax": [23],
+    "angle_deg": [10]
+  },
+  "file_colnames": {
+    "cell_id": "labelimage_oid",
+    "X": "Center.of.the.object_0",
+    "Y": "Center.of.the.object_1",
+    "Z": "Center.of.the.object_2",
+    "Roi_mean": "Mean.Intensity",
+    "Neighbor_mean": "Mean.Intensity.in.neighborhood",
+    "Label": "Predicted.Class"
+  }
+}

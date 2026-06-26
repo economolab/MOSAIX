@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Bulk data — NOT tracked in git. Download separately from Zenodo (see README).
+# ---------------------------------------------------------------------------
+
+# Input data (~19 GB essential + ~17 GB optional raw reference). From Zenodo.
+/input/*
+!/input/.gitkeep
+
+# Pipeline-generated artifacts (recreated by running the pipeline)
+/output/*
+!/output/.gitkeep
+/intermediate/*
+!/intermediate/.gitkeep
+
+# Large MATLAB data file — exceeds GitHub's 100 MB per-file limit
+fake_amp_zscores.mat
+
+# macOS cruft
+.DS_Store
+.claude/

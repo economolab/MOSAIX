@@ -1,0 +1,28 @@
+{
+  "experiment_id": "1008",
+  "experiment_label": "2024-10-08 MOSAIX Contra MCtx",
+  "data_subdir": "Contra_1008/Registered/",
+  "slice_enumeration": "folder",
+  "slice_offset": 0,
+  "n_slices": 4,
+  "gene_file_regex": ".*/(s\\d{2}_.*)\\d{3}_.*_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Rorb", "Ccdc80", "Pamr1", "Dkkl1", "Npnt", "Fam84b", "Slco2a1",
+                 "Myl4", "Syt6", "Ctgf", "Slc32a1", "Pvalb", "Sst", "Vip"],
+  "genes_combined": [["Ctgf", "Penk"]],
+  "img_lims": {
+    "ymax": [1711, 1966, 1902, 2244],
+    "ymin": [213, 123, 78, 250],
+    "zmin": [0, 0, 0, 0],
+    "zmax": [40, 40, 36, 39],
+    "angle_deg": [-5, -12, -3, -5]
+  },
+  "file_colnames": {
+    "cell_id": "CellID",
+    "X": "Center_X",
+    "Y": "Center_Y",
+    "Z": "Center_Z",
+    "Roi_mean": "MeanROIIntensity",
+    "Neighbor_mean": "MeanNeighborhoodIntensity",
+    "Label": "UserLabel"
+  }
+}

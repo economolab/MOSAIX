@@ -1,0 +1,6 @@
+{
+  "reference_data_dir": "input/processed_abc",
+  "mosaix_data_dir": "input/",
+  "intermediate_dir": "intermediate/",
+  "output_dir": "output/"
+}

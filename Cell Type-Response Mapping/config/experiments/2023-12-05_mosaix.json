@@ -1,0 +1,28 @@
+{
+  "experiment_id": "1205",
+  "experiment_label": "2023-12-05 MOSAIX",
+  "data_subdir": "MOSAIX_1205/",
+  "slice_enumeration": "flat",
+  "slice_offset": 0,
+  "n_slices": 1,
+  "gene_file_regex": ".*/(.*?)_\\d{3}_table\\.csv",
+  "hcr_genes": ["Penk", "Calb1", "Lamp5", "Ccdc80", "Pamr1", "Dkkl1", "Npnt", "Fam84b",
+                 "Slco2a1", "Myl4", "Syt6", "Ctgf", "Slc32a1", "Pvalb", "Sst", "Vip", "JF585"],
+  "genes_combined": [],
+  "img_lims": {
+    "ymax": [2550],
+    "ymin": [300],
+    "zmin": [1],
+    "zmax": [34],
+    "angle_deg": [-15]
+  },
+  "file_colnames": {
+    "cell_id": "labelimage_oid",
+    "X": "Center.of.the.object_0",
+    "Y": "Center.of.the.object_1",
+    "Z": "Center.of.the.object_2",
+    "Roi_mean": "Mean.Intensity",
+    "Neighbor_mean": "Mean.Intensity.in.neighborhood",
+    "Label": "Predicted.Class"
+  }
+}
