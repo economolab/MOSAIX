@@ -24,8 +24,8 @@ R/
   config_loader.R            - Reads JSON configs and resolves paths
   hcr_data_loader.R          - Loads Ilastik CSVs and performs spatial rotation
   fit_gmm_thresholds.R       - GMM fitting (replaces Python script)
-  make_meta_seq_cells.R      - Full Stream 2: meta cells → GMM → binarization
-  prepare_reference_data.R   - One-time: creates Seurat reference objects from Allen data
+  make_meta_seq_cells.R      - Optional one-time: meta cells → GMM → binarization (outputs shipped in intermediate/)
+  prepare_reference_data.R   - Optional one-time: builds processed_abc/ reference objects from raw Allen data (not distributed)
 MATLAB/
   Find_EPSPs.m               - Unified electrophysiology extraction (config-driven)
   load_slice_data.m          - Per-slice file loading helper
@@ -136,19 +136,18 @@ To recreate: run `Extract_CheRiff_density('config/experiments/<id>.json')`, whic
 
 The `input/` data is hosted on Zenodo (not in this repo). Download and extract it into the `input/` folder at the pipeline root so the structure matches the layout described above (`input/<experiment_folder>/`, `input/processed_abc/`, etc.).
 
-The data is split into two archives so you only download what you need:
+Everything needed to run the pipeline lives in a single archive (~19 GB): the `processed_abc/` reference data plus all per-experiment folders.
 
-| Archive | Size | When you need it |
-|---------|------|------------------|
-| **Pipeline inputs** (essential) | ~19 GB | Always. Contains `processed_abc/` (MERFISH/ABC reference) plus all per-experiment folders. This is everything required to run the classification and electrophysiology pipeline. |
-| **Raw reference data** (optional) | ~17 GB | Only if you want to regenerate the reference data from scratch via `R/prepare_reference_data.R` (a one-time step most users never run). Contains `raw_abc/`. |
+| Archive | Size | Contents |
+|---------|------|----------|
+| **Pipeline inputs** | ~19 GB | `processed_abc/` (MERFISH/ABC reference) plus all per-experiment folders. Everything required to run classification and electrophysiology. |
 
 After downloading, your `input/` folder should look like:
 
 ```
 input/
-  processed_abc/        (from "Pipeline inputs")
-  Cortical_0416/        (from "Pipeline inputs")
+  processed_abc/        (MERFISH/ABC reference objects)
+  Cortical_0416/
   Voltron_1022/
   MOSAIX_1205/
   MThal_0730/
@@ -157,18 +156,21 @@ input/
   Contra_0814/
   Contra_1008/
   HCR annotations/
-  raw_abc/              (only from "Raw reference data", if needed)
 ```
 
 > **Zenodo DOI / link:** _add once the record is published._
 
+The raw Allen Brain Cell Atlas data (`raw_abc/`, ~36 GB) used by `R/prepare_reference_data.R` to build `processed_abc/` is **not distributed** — `processed_abc/` is provided directly. `prepare_reference_data.R` is included for transparency (it documents how the reference was generated); to re-run it from scratch you would need to download the raw Allen data yourself.
+
 ## Quick Start
 
-### Stream 2: Prepare reference data (run once)
+### Stream 2: Prepare reference data (optional — outputs already shipped)
+The binarized reference files this produces are committed under `intermediate/`, so you do **not** need to run this to use the pipeline. It is provided for transparency / to regenerate the reference from `processed_abc/`.
 ```r
 # In RStudio, set working directory to the MOSAIX pipeline root
 source('R/make_meta_seq_cells.R')
-# Outputs: intermediate/All_genes_bin.csv, intermediate/GMM_Thresholds.csv
+# Outputs (already provided in intermediate/): All_genes_bin.csv, GMM_Thresholds.csv,
+#   meta_log_counts.csv, meta_norm_counts.csv
 ```
 
 ### Stream 1: Classify cells for an experiment

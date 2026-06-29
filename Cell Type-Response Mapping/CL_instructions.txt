@@ -1,13 +1,18 @@
 cd /path/to/MOSAIX   # cd into your local clone of the repo
 
-# ONE TIME: 
+# ONE TIME (OPTIONAL — outputs are already provided, see notes):
 
-# Pre-process ABC Atlas RNA-Seq and MERFISH data for subsequent use.
-# (Needs raw seq/merfish and metadata files to be in the "input/raw abc" folder)
+# (Optional, for transparency only) Pre-process raw ABC Atlas RNA-Seq/MERFISH
+# data into input/processed_abc/. The processed_abc/ files are distributed
+# directly (via Zenodo), and the raw input data is NOT distributed, so this
+# normally does not need to be run. Re-running requires downloading the raw
+# Allen Brain Cell Atlas data yourself into input/raw_abc/.
 Rscript R/prepare_reference_data.R
 
-# Generate binarized RNA-Seq data for Bayesian classification of HCR data.
-# (Needs processed seq and merfish files to be in the "input/processed abc" folder)
+# (Optional) Generate binarized RNA-Seq data for Bayesian classification.
+# Its outputs are already committed under intermediate/ (All_genes_bin.csv,
+# GMM_Thresholds.csv, meta_log_counts.csv, meta_norm_counts.csv), so this only
+# needs to be run to regenerate them. Reads input/processed_abc/.
 Rscript R/make_meta_seq_cells.R
 
 
