@@ -6,11 +6,12 @@
 /input/*
 !/input/.gitkeep
 
-# Pipeline-generated artifacts (recreated by running the pipeline)
+# Generated output — entire folder excluded (recreated by the pipeline)
 /output/*
 !/output/.gitkeep
-/intermediate/*
-!/intermediate/.gitkeep
+
+# intermediate/: keep the CSVs, exclude the large .mat files
+/intermediate/*.mat
 
 # Large MATLAB data file — exceeds GitHub's 100 MB per-file limit
 fake_amp_zscores.mat
