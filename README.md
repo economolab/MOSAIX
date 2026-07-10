@@ -1,6 +1,6 @@
 # MOSAIX
 
-A suite of analysis tools for mapping cortical cell types to their functional responses, combining genetically-encoded voltage imaging (GEVI), HCR/MERFISH spatial transcriptomics, and optogenetic electrophysiology.
+A suite of analysis tools for mapping cortical cell types to their functional responses, combining voltage imaging and mFISH spatial transcriptomics datasets.
 
 ## Components
 
